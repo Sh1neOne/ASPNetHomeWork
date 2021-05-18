@@ -19,5 +19,11 @@ namespace WebApplication.Entities
         {
             return await context.Products.ToListAsync();
         }
+
+        public async Task<int> Add(Product product)
+        {
+            context.Products.Add(product);
+            return await context.SaveChangesAsync();
+        } 
     }
 }

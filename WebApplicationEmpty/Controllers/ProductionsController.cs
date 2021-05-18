@@ -15,6 +15,11 @@ namespace WebApplication.Controllers
             repository = rep; 
         }
 
+        public IActionResult Add()
+        {
+            return View();
+        }
+
         public async Task<IActionResult> Productions()
         {
             ViewBag.Products = await repository.GetProductsAsync();

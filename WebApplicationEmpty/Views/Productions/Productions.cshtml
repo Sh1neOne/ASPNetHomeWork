@@ -5,14 +5,20 @@
     <section>
         <h2>Продукция компании:</h2>
         <ul class="big-image-list">
+            <p>
+                <a asp-action="Add">Добавить</a>
+            </p>
             <li>
                 @foreach (Product product in ViewBag.Products)
                 {
                     <a href="#"><img src="~/images/Лестница.jpg" alt="" class="left" /></a>
-                
+
                     <h3>@product.Name</h3>
                     <p>
-                       @product.Description
+                        @product.Description
+                    </p>
+                    <p>
+                        <a asp-action="Add">Добавить</a>
                     </p>
                 }
             </li>

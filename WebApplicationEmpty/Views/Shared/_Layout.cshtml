@@ -1,18 +1,4 @@
-﻿@using Microsoft.AspNetCore.Html
-@functions {
-    private HtmlString RenderCurrentPage(string controllerName, string actionName, string tittleName)
-    {
-        "ddsf".Substring()
-        var res = String.Format("<a asp-controller='{0}' asp-action='{1}' class='{2}'>{3}</a>", controllerName, actionName, "current-page-item", tittleName);
-        return new HtmlString(res);
-
-    }
-}
-
-
-
-
-
+﻿
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -33,10 +19,7 @@
                         <header id="header">
                             <h1><a asp-area="" asp-controller="Home" asp-action="Index" id="logo">@Config.CompanyName</a></h1>
                             <nav id="nav">
-                            
-                                @RenderCurrentPage("Home", "Index", "Главная")
-
-
+                                                         
                                 <a asp-area="" asp-controller="Home" asp-action="Index">Главная </a>
                                 <a asp-area="" asp-controller="Home" asp-action="Contacts">Контакты</a>
                                 <a asp-area="" asp-controller="Productions" asp-action="Productions">Продукция</a>
