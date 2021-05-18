@@ -9,5 +9,7 @@ namespace WebApplication.Service
     {
         public static string ConnectionString { get; set; }
         public static string CompanyName { get; set; }
+        public static string Adress { get; set; }
+        public static string PhoneNumber{ get; set; }
     }
 }

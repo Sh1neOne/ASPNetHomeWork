@@ -20,10 +20,22 @@ namespace WebApplication.Entities
             return await context.Products.ToListAsync();
         }
 
-        public async Task<int> Add(Product product)
+        public async Task<Product> GetProductByIdAsync(int id)
         {
-            context.Products.Add(product);
+            return await context.Products.FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task<int> SaveProduct(Product product)
+        {
+            context.Entry(product).State = product.Id == default ? EntityState.Added : EntityState.Modified;
+
             return await context.SaveChangesAsync();
-        } 
+        }
+
+        public async Task<int> DeleteProduct(int id)
+        {
+            context.Products.Remove(new Product() {Id = id});
+            return await context.SaveChangesAsync();
+        }
     }
 }
