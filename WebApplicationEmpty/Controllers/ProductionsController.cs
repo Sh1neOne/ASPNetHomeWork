@@ -6,9 +6,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using WebApplication.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApplication.Controllers
 {
+    [Authorize]
     public class ProductionsController : Controller
     {
         private readonly ProductRepository repository;
@@ -55,6 +57,7 @@ namespace WebApplication.Controllers
            
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             ViewBag.Products = await repository.GetProductsAsync();

@@ -1,0 +1,28 @@
+﻿@model UserRegistration
+<div>
+    <h1>Регистрация</h1>
+    <div class="div-box">
+        <form asp-area="" asp-controller="Account" asp-action="Register" method="post">
+            <div asp-validation-summary="All"></div>
+            <div>
+                <label asp-for="LoginProp"></label>
+                <input asp-for="LoginProp" />
+                <span asp-validation-for="LoginProp"></span>
+            </div>
+            <div>
+                <label asp-for="Password"></label>
+                <input asp-for="Password" />
+                <span asp-validation-for="Password"></span>
+            </div> 
+            <div>
+                <label asp-for="ConfirmPassword"></label>
+                <input asp-for="ConfirmPassword" />
+                <span asp-validation-for="ConfirmPassword"></span>
+            </div>
+
+            <div>
+                <input type="submit" value="Регистрация" />
+            </div>
+        </form>
+    </div>
+</div>

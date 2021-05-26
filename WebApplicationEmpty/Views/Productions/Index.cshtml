@@ -1,17 +1,22 @@
 ﻿
 
-<div class="col-6 col-12-medium" id ="result">
+<div class="col-6 col-12-medium" id="result">
 
     <section>
         <h2>Продукция компании:</h2>
         <ul class="big-image-list">
-            <p>
+            @if (User.Identity.IsAuthenticated)
+            { 
+                <p>
                 <a asp-action="Edit" asp-route-id="">Добавить</a>
             </p>
+            }
 
             @foreach (Product product in ViewBag.Products)
             {
                 <li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
                     <a asp-area="" asp-controller="Productions" asp-action="Edit" asp-route-id="@product.Id">редактировать</a>
                     <a asp-area="" id="btnDel-@product.Id">удалить</a>
                     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
@@ -26,14 +31,15 @@
                             });
                         });
                     </script>
+                    }
 
-                    @if (product.Image != null) 
+                    @if (product.Image != null)
                     {
-                        <a href="#"><img src="data:image/jpeg;base64,@(Convert.ToBase64String(product.Image))" alt="" class="left"/></a>
+                        <a href="#"><img src="data:image/jpeg;base64,@(Convert.ToBase64String(product.Image))" alt="" class="left" /></a>
                     }
                     else
                     {
-                        <a href="#"><img src="~/images/Лестница.jpg" alt="" class="left"/></a>
+                        <a href="#"><img src="~/images/def.png" alt="" class="left" /></a>
                     }
 
                     <h3>@product.Name</h3>

@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using WebApplication;
 using WebApplication.Service;
 using WebApplication.Entities;
+using WebApplication.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace WebApplication
 {
@@ -25,6 +27,29 @@ namespace WebApplication
             Configuration.Bind("Project", new Config());
             services.AddTransient<ProductRepository>();
             services.AddDbContext<AppDbContext>(x => x.UseSqlServer(Config.ConnectionString));
+            services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddDefaultTokenProviders();
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequiredLength = 6; // минимальное количество знаков в пароле
+                options.Lockout.MaxFailedAccessAttempts = 10; // количество попыток о блокировки
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
+                options.Lockout.AllowedForNewUsers = true;
+            
+                
+            });
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                // конфигурация Cookie с целью использования их для хранения авторизации
+                options.Cookie.HttpOnly = true;
+                //options.Cookie.Expiration = TimeSpan.FromMinutes(30);
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                options.LoginPath = "/Account/Login";
+                options.LogoutPath = "/Account/Logout";
+                options.SlidingExpiration = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,7 +61,12 @@ namespace WebApplication
             }
 
             app.UseStaticFiles();
+            
             app.UseRouting();
+            
+            app.UseCookiePolicy();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
