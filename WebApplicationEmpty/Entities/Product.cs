@@ -14,7 +14,7 @@ namespace WebApplication.Entities
         [Required(ErrorMessage = "Заполните название услуги")]
         public string Name { get; set; }
         [Display(Name = "Изображение")]
-        public byte[] Image{ get; set; }
+        public byte[]? Image{ get; set; }
         [Display(Name = "Описание")]
         public String Description { get; set; }
     }

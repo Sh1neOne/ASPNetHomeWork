@@ -7,16 +7,17 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using WebApplication.Entities;
 using Microsoft.AspNetCore.Authorization;
+using WebApplication.Interface;
 
 namespace WebApplication.Controllers
 {
     [Authorize]
     public class ProductionsController : Controller
     {
-        private readonly ProductRepository repository;
+        private readonly IProductData repository;
 
         [HttpPost]
-        public async Task<IActionResult> Edit(Product model, IFormFile imageData)
+        public IActionResult Edit(Product model, IFormFile imageData)
         {
             byte[] image;
             if (ModelState.IsValid)
@@ -30,21 +31,21 @@ namespace WebApplication.Controllers
 
                     model.Image = image;
                 }
-                await repository.SaveProduct(model);
+                repository.SaveProduct(model);
                 return RedirectToAction(nameof(ProductionsController.Index), nameof(ProductionsController).Replace("Controller",""));
             }
 
             return View();
         }
 
-        public ProductionsController(ProductRepository rep)
+        public ProductionsController(IProductData rep)
         {
             repository = rep; 
         }
 
         public IActionResult Edit(int id)
         {
-            var entity = id == default(int) ? new Product() : repository.GetProductByIdAsync(id).Result;
+            var entity = id == default(int) ? new Product() : repository.GetProductById(id);
             return View(entity);
         }
 
@@ -52,7 +53,7 @@ namespace WebApplication.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
-            await repository.DeleteProduct(id);
+            repository.DeleteProduct(id);
             return RedirectToAction(nameof(ProductionsController.Index), nameof(ProductionsController).Replace("Controller", ""));
            
         }
@@ -60,7 +61,7 @@ namespace WebApplication.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            ViewBag.Products = await repository.GetProductsAsync();
+            ViewBag.Products = repository.GetProducts();
             return View();
         }
     }

@@ -14,6 +14,7 @@ using WebApplication.Service;
 using WebApplication.Entities;
 using WebApplication.Models;
 using Microsoft.AspNetCore.Identity;
+using WebApplication.Interface;
 
 namespace WebApplication
 {
@@ -25,7 +26,8 @@ namespace WebApplication
         {
             services.AddControllersWithViews();
             Configuration.Bind("Project", new Config());
-            services.AddTransient<ProductRepository>();
+        
+            services.AddTransient<IProductData, ProductRerositoryApi>();
             services.AddDbContext<AppDbContext>(x => x.UseSqlServer(Config.ConnectionString));
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>()
