@@ -10,7 +10,7 @@ namespace WebApplication.Interface
     {
         List<Product> GetProducts();
         Product GetProductById(int id);
-        int SaveProduct(Product product);
-        int DeleteProduct(int id);
+        void SaveProduct(Product product);
+        void DeleteProduct(int id);
     }
 }

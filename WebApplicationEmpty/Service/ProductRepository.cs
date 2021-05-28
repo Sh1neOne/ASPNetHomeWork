@@ -26,17 +26,17 @@ namespace WebApplication.Entities
             return context.Products.FirstOrDefault(x => x.Id == id);
         }
 
-        public int SaveProduct(Product product)
+        public void SaveProduct(Product product)
         {
             context.Entry(product).State = product.Id == default ? EntityState.Added : EntityState.Modified;
 
-            return context.SaveChanges();
+            context.SaveChanges();
         }
 
-        public int DeleteProduct(int id)
+        public void DeleteProduct(int id)
         {
             context.Products.Remove(new Product() {Id = id});
-            return context.SaveChanges();
+            context.SaveChanges();
         }
     }
 }

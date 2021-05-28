@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using WebApplication.Entities;
@@ -30,17 +31,21 @@ namespace WebApplication.Service
 
         public Product GetProductById(int id)
         {
-            throw new NotImplementedException();
+            string json = httpClient.GetStringAsync($"{Config.Apiurl}/getproduct/{id}").Result;
+
+            return JsonConvert.DeserializeObject<Product>(json);
         }
 
-        public int SaveProduct(Product product)
+        public void SaveProduct(Product product)
         {
-            throw new NotImplementedException();
+            var r = httpClient.PostAsync(requestUri: $"{Config.Apiurl}/addproduct",
+                content: new StringContent(JsonConvert.SerializeObject(product), Encoding.UTF8,
+                mediaType: "application/json")).Result;     
         }
 
-        public int DeleteProduct(int id)
+        public void DeleteProduct(int id)
         {
-            throw new NotImplementedException();
+            var r = httpClient.DeleteAsync(requestUri: $"{Config.Apiurl}/deleteproduct/{id}").Result;
         }
     }
 }
