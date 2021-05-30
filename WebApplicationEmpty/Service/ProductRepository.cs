@@ -1,9 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using WebApplication.Entities;
 using WebApplication.Interface;
 
 namespace WebApplication.Entities
